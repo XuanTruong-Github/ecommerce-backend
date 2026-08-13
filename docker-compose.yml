@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: ecommerce-postgres
+    restart: always
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - ecommerce_postgres_data:/var/lib/postgresql/data
+  redis:
+    image: redis:7
+    container_name: ecommerce-redis
+    command: redis-server --appendonly yes
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - ecommerce_redis_data:/data
+
+volumes:
+  ecommerce_postgres_data:
+  ecommerce_redis_data:
