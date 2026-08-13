@@ -10,6 +10,8 @@ export const envSchema = z.object({
   REDIS_HOST: z.string().default('localhost'),
   REDIS_PORT: z.coerce.number().default(6379),
   REDIS_PASSWORD: z.string().default('password'),
+  THROTTLE_TTL_MS: z.coerce.number().default(1000),
+  THROTTLE_LIMIT: z.coerce.number().default(60),
 });
 export type Env = z.infer<typeof envSchema>;
 export function validateEnv(config: Record<string, unknown>): Env {
