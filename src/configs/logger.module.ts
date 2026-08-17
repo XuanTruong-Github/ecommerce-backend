@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { randomUUID } from 'crypto';
 import { IncomingMessage } from 'http';
 import { LoggerModule } from 'nestjs-pino';
-import { REQUEST_ID } from 'src/middlewares/request-id.middleware';
+import { REQUEST_ID } from 'src/common/middlewares/request-id.middleware';
 
 @Module({
   imports: [
@@ -28,6 +28,7 @@ import { REQUEST_ID } from 'src/middlewares/request-id.middleware';
             genReqId: (req, res) => {
               const existing = req.headers[REQUEST_ID];
               const id = existing ?? randomUUID();
+              req.headers[REQUEST_ID] = id;
               res.setHeader(REQUEST_ID, id);
               return id;
             },
