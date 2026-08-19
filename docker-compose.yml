@@ -4,23 +4,51 @@ services:
     container_name: ecommerce-postgres
     restart: always
     ports:
-      - "${DB_PORT}:5432"
+      - "${DB_PORT:-5432}:5432"
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME:-truonglx}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-truonglx0603}
+      POSTGRES_DB: ${DB_DATABASE:-ecommerce_db}
     volumes:
       - ecommerce_postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ecommerce-pgadmin
+    restart: always
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+      - ecommerce_pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
   redis:
     image: redis:7
     container_name: ecommerce-redis
     command: redis-server --appendonly yes
     restart: always
     ports:
-      - "${REDIS_PORT}:6379"
+      - "${REDIS_PORT:-6379}:6379"
     volumes:
       - ecommerce_redis_data:/data
 
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    platform: linux/amd64
+    container_name: ecommerce-redis-commander
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "${REDIS_COMMANDER_PORT:-8081}:8081"
+    depends_on:
+      - redis
+
 volumes:
   ecommerce_postgres_data:
+  ecommerce_pgadmin_data:
   ecommerce_redis_data:
