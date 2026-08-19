@@ -2,16 +2,20 @@ import { z } from 'zod';
 export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'staging']),
   PORT: z.coerce.number().default(8080),
-  DB_HOST: z.string().default('localhost'),
-  DB_USERNAME: z.string().default('postgres'),
-  DB_PASSWORD: z.string().default('password'),
-  DB_DATABASE: z.string().default('ecommerce_db'),
-  DB_PORT: z.coerce.number().default(5432),
-  REDIS_HOST: z.string().default('localhost'),
-  REDIS_PORT: z.coerce.number().default(6379),
-  REDIS_PASSWORD: z.string().default('password'),
+  DB_HOST: z.string().trim().min(1),
+  DB_USERNAME: z.string().trim().min(1),
+  DB_PASSWORD: z.string().trim().min(1),
+  DB_DATABASE: z.string().trim().min(1),
+  DB_PORT: z.coerce.number().int().min(1).max(65535),
+  REDIS_HOST: z.string().trim().min(1),
+  REDIS_PORT: z.coerce.number().int().min(1).max(65535),
+  REDIS_PASSWORD: z.string().trim().min(1),
   THROTTLE_TTL_MS: z.coerce.number().default(1000),
   THROTTLE_LIMIT: z.coerce.number().default(60),
+  DB_POOL_MAX: z.coerce.number().default(10),
+  DB_POOL_MIN: z.coerce.number().default(2),
+  DB_POOL_CONNECTION_TIMEOUT_MS: z.coerce.number().default(5000),
+  DB_POOL_IDLE_TIMEOUT_MS: z.coerce.number().default(30000),
 });
 export type Env = z.infer<typeof envSchema>;
 export function validateEnv(config: Record<string, unknown>): Env {
