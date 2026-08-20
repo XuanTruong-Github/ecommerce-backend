@@ -2,17 +2,15 @@ import { User } from 'src/app/user/entities/user.entity';
 import { BaseEntity } from 'src/configs/database/base.entity';
 import { Column, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 
-@Entity('address')
+@Entity('addresses')
+@Index('user_default_address', ['userId'], {
+  unique: true,
+  where: '"is_default" = true AND "deleted_at" IS NULL',
+})
 export class Address extends BaseEntity {
   @Index()
   @Column({ type: 'uuid' })
   userId: string;
-
-  @ManyToOne(() => User, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
 
   @Column({
     type: 'text',
@@ -31,6 +29,7 @@ export class Address extends BaseEntity {
 
   @Column({
     type: 'text',
+    nullable: true,
   })
   addressLine2: string;
 
@@ -71,4 +70,10 @@ export class Address extends BaseEntity {
     nullable: true,
   })
   deletedAt: Date | null;
+
+  @ManyToOne(() => User, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

@@ -4,6 +4,7 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 
 @Injectable()
 export class AddressService {
+  constructor() {}
   create(createAddressDto: CreateAddressDto) {
     return 'This action adds a new address';
   }
