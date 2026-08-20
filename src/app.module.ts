@@ -10,6 +10,9 @@ import { AllExceptionFilter } from './common/filters/all-exceptions.filter';
 import { allConfigs } from './configs/configurations';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './configs/database/typeorm-config.service';
+import { AuthModule } from './app/auth/auth.module';
+import { UserModule } from './app/user/user.module';
+import { AddressModule } from './app/address/address.module';
 
 const envFile =
   process.env.NODE_ENV === 'production'
@@ -29,6 +32,9 @@ const envFile =
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
+    AuthModule,
+    UserModule,
+    AddressModule,
   ],
   providers: [
     {
