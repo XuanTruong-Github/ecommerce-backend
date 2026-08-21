@@ -13,10 +13,10 @@ export class Category extends BaseEntity {
   slug: string;
 
   @Column({ type: 'text', nullable: true })
-  description: string;
+  description: string | null;
 
   @Column({ type: 'text', nullable: true })
-  imageUrl: string;
+  imageUrl: string | null;
 
   @Index()
   @Column({ type: 'uuid', nullable: true })

@@ -36,13 +36,13 @@ export class Product extends BaseEntity {
     type: 'text',
     nullable: true,
   })
-  shortDescription: string;
+  shortDescription: string | null;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  description: string;
+  description: string | null;
 
   @Column(decimalColumn)
   price: number;

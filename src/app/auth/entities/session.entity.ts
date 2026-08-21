@@ -29,11 +29,11 @@ export class Session extends BaseEntity {
     type: 'text',
     nullable: true,
   })
-  ipAddress: string;
+  ipAddress: string | null;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  userAgent: string;
+  userAgent: string | null;
 }

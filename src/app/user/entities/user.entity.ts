@@ -31,19 +31,19 @@ export class User extends BaseEntity {
     type: 'text',
     nullable: true,
   })
-  image: string;
+  image: string | null;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  phone: string;
+  phone: string | null;
 
   @Column({
     type: 'date',
     nullable: true,
   })
-  date_of_birth: Date;
+  date_of_birth: Date | null;
 
   @Column({
     type: 'enum',

@@ -31,7 +31,7 @@ export class Address extends BaseEntity {
     type: 'text',
     nullable: true,
   })
-  addressLine2: string;
+  addressLine2: string | null;
 
   @Column({
     type: 'text',
