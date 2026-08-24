@@ -19,6 +19,7 @@ import { ProductImageModule } from './app/product-image/product-image.module';
 import { ReviewModule } from './app/review/review.module';
 import { ProductVariantModule } from './app/product-variant/product-variant.module';
 import { EmailModule } from './app/email/email.module';
+import { LoggerModule } from 'nestjs-pino';
 
 const envFile =
   process.env.NODE_ENV === 'production'
