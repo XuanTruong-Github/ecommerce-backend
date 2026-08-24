@@ -16,6 +16,9 @@ export const envSchema = z.object({
   DB_POOL_MIN: z.coerce.number().default(2),
   DB_POOL_CONNECTION_TIMEOUT_MS: z.coerce.number().default(5000),
   DB_POOL_IDLE_TIMEOUT_MS: z.coerce.number().default(30000),
+  SMTP_USER: z.email(),
+  SMTP_PASS: z.string().min(1),
+  SMTP_FROM: z.email(),
 });
 export type Env = z.infer<typeof envSchema>;
 export function validateEnv(config: Record<string, unknown>): Env {
