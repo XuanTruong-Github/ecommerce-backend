@@ -9,12 +9,6 @@ export class Account extends BaseEntity {
   @Column({ type: 'uuid' })
   userId: string;
 
-  @ManyToOne(() => User, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
-
   @Column({
     type: 'text',
   })
@@ -72,4 +66,10 @@ export class Account extends BaseEntity {
     nullable: true,
   })
   deletedAt: Date | null;
+
+  @ManyToOne(() => User, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
