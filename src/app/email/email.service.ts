@@ -9,6 +9,7 @@ export class EmailService {
     private readonly configService: ConfigService,
     private readonly logger: PinoLogger,
   ) {
+    this.logger.setContext(EmailService.name);
     this.createTransporter();
   }
   private async verifyConnection() {
