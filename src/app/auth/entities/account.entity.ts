@@ -23,49 +23,49 @@ export class Account extends BaseEntity {
     type: 'text',
     nullable: true,
   })
-  accessToken: string | null;
+  accessToken?: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  refreshToken: string | null;
+  refreshToken?: string;
 
   @Column({
     type: 'timestamptz',
     nullable: true,
   })
-  accessTokenExpiresAt: Date | null;
+  accessTokenExpiresAt?: Date;
 
   @Column({
     type: 'timestamptz',
     nullable: true,
   })
-  refreshTokenExpiresAt: Date | null;
+  refreshTokenExpiresAt?: Date;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  scope: string | null;
+  scope?: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  idToken: string | null;
+  idToken?: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  password: string | null;
+  password?: string;
 
   @DeleteDateColumn({
     type: 'timestamptz',
     nullable: true,
   })
-  deletedAt: Date | null;
+  deletedAt?: Date;
 
   @ManyToOne(() => User, {
     onDelete: 'CASCADE',

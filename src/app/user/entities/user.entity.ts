@@ -22,28 +22,27 @@ export class User extends BaseEntity {
   email: string;
 
   @Column({
-    type: 'boolean',
     default: false,
   })
-  email_verified: boolean;
+  emailVerified: boolean;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  image: string | null;
+  image?: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  phone: string | null;
+  phone?: string;
 
   @Column({
     type: 'date',
     nullable: true,
   })
-  date_of_birth: Date | null;
+  dateOfBirth?: Date;
 
   @Column({
     type: 'enum',
@@ -63,5 +62,5 @@ export class User extends BaseEntity {
     type: 'timestamptz',
     nullable: true,
   })
-  deletedAt: Date | null;
+  deletedAt?: Date;
 }
