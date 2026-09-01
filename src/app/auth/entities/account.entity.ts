@@ -12,6 +12,11 @@ export class Account extends BaseEntity {
   @Column({
     type: 'text',
   })
+  issuer: string;
+
+  @Column({
+    type: 'text',
+  })
   accountId: string;
 
   @Column({
