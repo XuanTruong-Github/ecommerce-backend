@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { setupApp } from './bootstrap/setup-app';
+import { setupSwagger } from './bootstrap/setup-swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -13,10 +14,12 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
   const config = app.get(ConfigService);
   setupApp(app);
+  setupSwagger(app);
   const logger = app.get(Logger);
   const port = config.get<number>('PORT');
   await app.listen(port, () => {
     logger.log(`API is running at port: ${port}`);
+    logger.log(`Swagger UI available at: http://localhost:${port}/docs`);
   });
 }
 bootstrap().catch((error) => {

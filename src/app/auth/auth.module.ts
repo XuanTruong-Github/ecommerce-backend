@@ -3,10 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from './entities/account.entity';
 import { Session } from './entities/session.entity';
 import { Verification } from './entities/verification.entity';
+import { SessionAuthService } from './session-auth/session-auth.service';
 
 @Module({
   controllers: [],
-  providers: [],
+  providers: [SessionAuthService],
   imports: [TypeOrmModule.forFeature([Account, Session, Verification])],
 })
 export class AuthModule {}
