@@ -3,7 +3,7 @@ import { BaseEntity } from 'src/configs/database/base.entity';
 import { User } from 'src/app/user/entities/user.entity';
 
 @Entity('accounts')
-@Index(['providerId', 'accountId'], { unique: true })
+@Index(['issuer', 'accountId'], { unique: true })
 export class Account extends BaseEntity {
   @Index()
   @Column({ type: 'uuid' })

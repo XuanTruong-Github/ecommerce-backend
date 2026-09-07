@@ -8,5 +8,5 @@ export function setupSwagger(app: NestExpressApplication) {
     .addBearerAuth()
     .build();
   const document = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('/api/docs', app, document);
 }

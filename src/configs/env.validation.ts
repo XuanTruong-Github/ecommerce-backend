@@ -20,6 +20,7 @@ export const envSchema = z.object({
   SMTP_PASS: z.string().min(1),
   SMTP_FROM: z.email(),
   BETTER_AUTH_SECRET: z.string().min(1),
+  BETTER_AUTH_URL: z.string().url().optional(),
 });
 export type Env = z.infer<typeof envSchema>;
 export function validateEnv(config: Record<string, unknown>): Env {

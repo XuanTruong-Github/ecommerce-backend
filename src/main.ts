@@ -17,9 +17,11 @@ async function bootstrap() {
   setupSwagger(app);
   const logger = app.get(Logger);
   const port = config.get<number>('PORT');
-  await app.listen(port, () => {
-    logger.log(`API is running at port: ${port}`);
-    logger.log(`Swagger UI available at: http://localhost:${port}/docs`);
+  await app.listen(port, async () => {
+    const appUrl = await app.getUrl();
+    logger.log(`API is running at port: ${appUrl}`);
+    logger.log(`Swagger UI available at: ${appUrl}/api/docs`);
+    logger.log(`Better Auth doc available at: ${appUrl}/api/auth/reference`);
   });
 }
 bootstrap().catch((error) => {

@@ -3,8 +3,23 @@ import cookieParser from 'cookie-parser';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 export function setupApp(app: NestExpressApplication) {
   app.use(cookieParser());
+  // Cho phép ALL origins (không cố định) nhưng vẫn hỗ trợ credentials.
+  // Lưu ý: với credentials:true không thể dùng "*" -> phải reflect Origin.
+  // origin:true = tự động reflect request Origin (cors lib).
+  // Nếu cần whitelist lại, đổi thành mảng hoặc env CORS_ORIGINS.
   app.enableCors({
+    origin: true,
     credentials: true,
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Requested-With',
+      'X-Request-Id',
+      'Accept',
+      'Origin',
+    ],
+    exposedHeaders: ['Set-Cookie', 'Content-Disposition'],
   });
   app.useGlobalPipes(
     new ValidationPipe({
