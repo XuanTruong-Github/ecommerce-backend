@@ -9,6 +9,7 @@ import { Verification } from './entities/verification.entity';
 import { User } from '../user/entities/user.entity';
 import { EmailModule } from '../email/email.module';
 import { EmailService } from '../email/email.service';
+import { RedisModule } from '../redis/redis.module';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { EmailService } from '../email/email.service';
     BetterAuthModule.forRootAsync({
       isGlobal: true,
       disableGlobalAuthGuard: true,
-      imports: [EmailModule],
+      imports: [EmailModule, RedisModule],
       inject: [DataSource, EmailService],
       useFactory: (dataSource: DataSource, emailService: EmailService) => {
         return {

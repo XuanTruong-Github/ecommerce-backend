@@ -17,6 +17,8 @@ import { CategoryModule } from './app/category/category.module';
 import { ProductModule } from './app/product/product.module';
 import { ProductImageModule } from './app/product-image/product-image.module';
 import { EmailModule } from './app/email/email.module';
+import { RedisModule } from './app/redis/redis.module';
+import { RedisService } from './app/redis/redis.service';
 
 const envFile =
   process.env.NODE_ENV === 'production'
@@ -43,6 +45,7 @@ const envFile =
     ProductModule,
     ProductImageModule,
     EmailModule,
+    RedisModule,
   ],
   providers: [
     {
@@ -53,6 +56,7 @@ const envFile =
       provide: APP_FILTER,
       useClass: AllExceptionFilter,
     },
+    RedisService,
   ],
 })
 export class AppModule implements NestModule {
