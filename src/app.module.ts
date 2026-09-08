@@ -19,6 +19,7 @@ import { ProductImageModule } from './app/product-image/product-image.module';
 import { EmailModule } from './app/email/email.module';
 import { RedisModule } from './app/redis/redis.module';
 import { RedisService } from './app/redis/redis.service';
+import { CouponModule } from './app/coupon/coupon.module';
 
 const envFile =
   process.env.NODE_ENV === 'production'
@@ -46,6 +47,7 @@ const envFile =
     ProductImageModule,
     EmailModule,
     RedisModule,
+    CouponModule,
   ],
   providers: [
     {
