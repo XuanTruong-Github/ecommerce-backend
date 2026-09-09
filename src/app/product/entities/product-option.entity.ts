@@ -1,7 +1,9 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Product } from './product.entity';
+import { ProductOptionValue } from './product-option-value.entity';
 
-enum ProductOptionType {
+export enum ProductOptionType {
   COLOR = 'color',
   SIZE = 'size',
   TEXT = 'text',
@@ -20,6 +22,16 @@ export class ProductOption extends BaseEntity {
   @Column({ type: 'int', default: 0 })
   displayOrder: number;
 
+  @Index()
   @Column({ type: 'enum', enum: ProductOptionType, default: ProductOptionType.TEXT })
   type: ProductOptionType;
+
+  @ManyToOne(() => Product, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
+
+  @OneToMany(() => ProductOptionValue, (value) => value.productOption)
+  values: ProductOptionValue[];
 }
