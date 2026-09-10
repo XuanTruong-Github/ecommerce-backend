@@ -35,7 +35,7 @@ export class ProductOption extends BaseEntity {
   product: Product;
 
   @OneToMany(() => ProductOptionValue, (value) => value.option, {
-    cascade: ['insert', 'update'],
+    cascade: true,
   })
   values: ProductOptionValue[];
 }

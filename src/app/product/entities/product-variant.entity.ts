@@ -57,7 +57,7 @@ export class ProductVariant extends BaseEntity {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @ManyToOne(() => Product, (product) => product.variants, { onDelete: 'CASCADE', nullable: false })
+  @ManyToOne(() => Product, (product) => product.variants, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 

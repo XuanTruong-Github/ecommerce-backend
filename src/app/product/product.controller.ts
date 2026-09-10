@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Patch,
+  Param,
+  Post,
+} from '@nestjs/common';
+import { ApiCreatedResponse } from '@nestjs/swagger';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -9,6 +20,8 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @ApiCreatedResponse()
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }

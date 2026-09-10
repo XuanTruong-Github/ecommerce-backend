@@ -7,6 +7,7 @@ import { ProductOption } from './entities/product-option.entity';
 import { ProductOptionValue } from './entities/product-option-value.entity';
 import { ProductVariant } from './entities/product-variant.entity';
 import { ProductImage } from './entities/product-image.entity';
+import { Category } from 'src/app/category/entities/category.entity';
 
 @Module({
   controllers: [ProductController],
@@ -18,6 +19,7 @@ import { ProductImage } from './entities/product-image.entity';
       ProductOption,
       ProductOptionValue,
       ProductVariant,
+      Category,
     ]),
   ],
 })
