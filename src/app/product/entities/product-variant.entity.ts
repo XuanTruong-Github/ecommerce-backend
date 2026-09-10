@@ -1,6 +1,6 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
 import { decimalColumn } from 'src/shared/utils/decimal-column.transformer';
-import { Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 import { Product } from './product.entity';
 import { ProductImage } from './product-image.entity';
 import { ProductOptionValue } from './product-option-value.entity';
@@ -50,14 +50,14 @@ export class ProductVariant extends BaseEntity {
   @Column({ type: 'uuid', nullable: true })
   imageId: string | null;
 
-  @OneToOne(() => ProductImage, { onDelete: 'SET NULL', nullable: true })
+  @ManyToOne(() => ProductImage, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'image_id' })
   image: ProductImage | null;
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @ManyToOne(() => Product, (product) => product.variants, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Product, (product) => product.variants, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 

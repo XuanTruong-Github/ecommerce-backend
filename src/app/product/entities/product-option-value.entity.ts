@@ -33,10 +33,11 @@ export class ProductOptionValue extends BaseEntity {
   displayOrder: number;
 
   @Column({ type: 'jsonb', nullable: true })
-  metadata: Record<string, any>;
+  metadata: Record<string, any> | null;
 
   @ManyToOne(() => ProductOption, (option) => option.values, {
     onDelete: 'CASCADE',
+    nullable: false,
   })
   @JoinColumn({ name: 'option_id' })
   option: ProductOption;

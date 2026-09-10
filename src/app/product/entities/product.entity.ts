@@ -16,12 +16,15 @@ import { ProductImage } from './product-image.entity';
 })
 export class Product extends BaseEntity {
   @Index()
-  @Column({ type: 'uuid' })
-  categoryId: string;
+  @Column({ type: 'uuid', nullable: true })
+  categoryId?: string | null;
   //   Relations
-  @ManyToOne(() => Category)
+  @ManyToOne(() => Category, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+  category?: Category | null;
 
   @Column({
     type: 'text',
@@ -84,6 +87,7 @@ export class Product extends BaseEntity {
     precision: 3,
     scale: 2,
     transformer: decimalColumnTransformer,
+    default: 0,
   })
   ratingAverage: number;
 
@@ -95,20 +99,20 @@ export class Product extends BaseEntity {
   hasVariants: boolean;
 
   @Column(decimalColumnNullable)
-  weight: number;
+  weight: number | null;
 
   @OneToMany(() => ProductOption, (option) => option.product, {
-    cascade: true,
+    cascade: ['insert', 'update'],
   })
   options: ProductOption[];
 
   @OneToMany(() => ProductVariant, (variant) => variant.product, {
-    cascade: true,
+    cascade: ['insert', 'update'],
   })
   variants: ProductVariant[];
 
   @OneToMany(() => ProductImage, (image) => image.product, {
-    cascade: true,
+    cascade: ['insert', 'update'],
   })
   images: ProductImage[];
 

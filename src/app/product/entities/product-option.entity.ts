@@ -11,6 +11,7 @@ export enum ProductOptionType {
 }
 
 @Entity('product_options')
+@Unique('uq_product_option_name', ['product', 'name'])
 export class ProductOption extends BaseEntity {
   @Index()
   @Column({ type: 'uuid' })
@@ -28,12 +29,13 @@ export class ProductOption extends BaseEntity {
 
   @ManyToOne(() => Product, (product) => product.options, {
     onDelete: 'CASCADE',
+    nullable: false,
   })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
   @OneToMany(() => ProductOptionValue, (value) => value.option, {
-    cascade: true,
+    cascade: ['insert', 'update'],
   })
   values: ProductOptionValue[];
 }
