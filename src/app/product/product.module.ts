@@ -5,10 +5,20 @@ import { Product } from './entities/product.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductOption } from './entities/product-option.entity';
 import { ProductOptionValue } from './entities/product-option-value.entity';
+import { ProductVariant } from './entities/product-variant.entity';
+import { ProductImage } from './entities/product-image.entity';
 
 @Module({
   controllers: [ProductController],
   providers: [ProductService],
-  imports: [TypeOrmModule.forFeature([Product, ProductOption, ProductOptionValue])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Product,
+      ProductImage,
+      ProductOption,
+      ProductOptionValue,
+      ProductVariant,
+    ]),
+  ],
 })
 export class ProductModule {}

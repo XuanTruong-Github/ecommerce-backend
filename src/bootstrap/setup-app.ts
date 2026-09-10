@@ -1,8 +1,12 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
 import cookieParser from 'cookie-parser';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { join } from 'path';
 export function setupApp(app: NestExpressApplication) {
   app.use(cookieParser());
+  app.useStaticAssets(join(process.cwd(), 'upload'), {
+    prefix: '/upload/',
+  });
   // Cho phép ALL origins (không cố định) nhưng vẫn hỗ trợ credentials.
   // Lưu ý: với credentials:true không thể dùng "*" -> phải reflect Origin.
   // origin:true = tự động reflect request Origin (cors lib).

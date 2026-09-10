@@ -1,7 +1,9 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
 import { decimalColumn } from 'src/shared/utils/decimal-column.transformer';
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne } from 'typeorm';
 import { Product } from './product.entity';
+import { ProductImage } from './product-image.entity';
+import { ProductOptionValue } from './product-option-value.entity';
 
 @Entity('product_variants')
 // Partial unique index: chỉ enforce unique barcode khi barcode IS NOT NULL
@@ -44,13 +46,32 @@ export class ProductVariant extends BaseEntity {
   @Column({ type: 'varchar', length: 255, nullable: true })
   slug: string | null;
 
-  @Column({ type: 'text', nullable: true })
-  imageUrl: string | null;
+  @Index()
+  @Column({ type: 'uuid', nullable: true })
+  imageId: string | null;
+
+  @OneToOne(() => ProductImage, { onDelete: 'SET NULL', nullable: true })
+  @JoinColumn({ name: 'image_id' })
+  image: ProductImage | null;
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
-  
-  @ManyToOne(() => Product, { onDelete: 'CASCADE', nullable: false })
+
+  @ManyToOne(() => Product, (product) => product.variants, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'product_id' })
   product: Product;
+
+  @ManyToMany(() => ProductOptionValue, (optionValue) => optionValue.variants)
+  @JoinTable({
+    name: 'variant_option_values',
+    joinColumn: {
+      name: 'variant_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'option_value_id',
+      referencedColumnName: 'id',
+    },
+  })
+  optionValues: ProductOptionValue[];
 }

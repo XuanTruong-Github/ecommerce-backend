@@ -5,7 +5,10 @@ import {
   decimalColumnNullable,
   decimalColumnTransformer,
 } from 'src/shared/utils/decimal-column.transformer';
-import { Column, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { ProductOption } from './product-option.entity';
+import { ProductVariant } from './product-variant.entity';
+import { ProductImage } from './product-image.entity';
 
 @Entity('products')
 @Index('idx_product_featured', ['isFeatured'], {
@@ -44,10 +47,10 @@ export class Product extends BaseEntity {
   })
   description: string | null;
 
-  @Column(decimalColumn)
+  @Column({ ...decimalColumn, default: 0 })
   price: number;
 
-  @Column(decimalColumnNullable)
+  @Column({ ...decimalColumn, default: 0 })
   compareAtPrice: number;
 
   @Column({
@@ -93,6 +96,21 @@ export class Product extends BaseEntity {
 
   @Column(decimalColumnNullable)
   weight: number;
+
+  @OneToMany(() => ProductOption, (option) => option.product, {
+    cascade: true,
+  })
+  options: ProductOption[];
+
+  @OneToMany(() => ProductVariant, (variant) => variant.product, {
+    cascade: true,
+  })
+  variants: ProductVariant[];
+
+  @OneToMany(() => ProductImage, (image) => image.product, {
+    cascade: true,
+  })
+  images: ProductImage[];
 
   @Index()
   @DeleteDateColumn({

@@ -15,11 +15,11 @@ import { UserModule } from './app/user/user.module';
 import { AddressModule } from './app/address/address.module';
 import { CategoryModule } from './app/category/category.module';
 import { ProductModule } from './app/product/product.module';
-import { ProductImageModule } from './app/product-image/product-image.module';
 import { EmailModule } from './app/email/email.module';
 import { RedisModule } from './configs/redis/redis.module';
 import { RedisService } from './configs/redis/redis.service';
 import { CouponModule } from './app/coupon/coupon.module';
+import { UploadModule } from './app/upload/upload.module';
 
 const envFile =
   process.env.NODE_ENV === 'production'
@@ -44,10 +44,10 @@ const envFile =
     AddressModule,
     CategoryModule,
     ProductModule,
-    ProductImageModule,
     EmailModule,
     RedisModule,
     CouponModule,
+    UploadModule,
   ],
   providers: [
     {

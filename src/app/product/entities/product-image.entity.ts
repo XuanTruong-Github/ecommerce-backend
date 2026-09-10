@@ -14,16 +14,10 @@ export class ProductImage extends BaseEntity {
 
   @ManyToOne(() => Product, {
     onDelete: 'CASCADE',
+    nullable: false,
   })
   @JoinColumn({ name: 'product_id' })
   product: Product;
-
-  @Index()
-  @Column({
-    type: 'uuid',
-    nullable: true,
-  })
-  variantId: string | null;
 
   @Column({
     type: 'text',

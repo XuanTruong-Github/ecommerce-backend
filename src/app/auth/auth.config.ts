@@ -53,6 +53,9 @@ export function createBetterAuthInstance({ dataSource, emailService }: BetterAut
         gender: { type: 'string', required: false, defaultValue: 'other' },
         role: { type: 'string', required: false, defaultValue: 'customer' },
       },
+      changeEmail: {
+        enabled: true,
+      },
     },
     session: {
       modelName: 'sessions',
