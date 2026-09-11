@@ -20,7 +20,6 @@ import { RedisModule } from './configs/redis/redis.module';
 import { RedisService } from './configs/redis/redis.service';
 import { CouponModule } from './app/coupon/coupon.module';
 import { UploadModule } from './app/upload/upload.module';
-
 const envFile =
   process.env.NODE_ENV === 'production'
     ? ['.env.production', '.env']

@@ -1,43 +1,30 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToMany,
-  ManyToOne,
-  RelationId,
-  Unique,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
 import { ProductOption } from './product-option.entity';
-import { decimalColumnNullable } from 'src/shared/utils/decimal-column.transformer';
 import { ProductVariant } from './product-variant.entity';
 
 @Entity('product_option_values')
-@Unique('uq_option_value', ['option', 'value'])
+// Unique: một option không thể có 2 value trùng nhau (e.g., 2 "Red" trong option "Color")
+@Index(['optionId', 'value'], { unique: true })
 export class ProductOptionValue extends BaseEntity {
-  @RelationId((pov: ProductOptionValue) => pov.option)
+  // FK index: tăng tốc JOIN / WHERE option_id = ?
+  @Index()
+  @Column({ type: 'uuid', name: 'option_id' })
   optionId: string;
 
-  @Index()
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 255 })
   value: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 255 })
   label: string;
 
-  @Column(decimalColumnNullable)
-  priceModifier: number | null;
-
-  @Column({ type: 'int', default: 0 })
-  displayOrder: number;
-
-  @Column({ type: 'jsonb', nullable: true })
-  metadata: Record<string, any> | null;
+  // Index: tăng tốc ORDER BY position khi load values theo thứ tự
+  @Index()
+  @Column({ type: 'smallint' })
+  position: number;
 
   @ManyToOne(() => ProductOption, (option) => option.values, {
     onDelete: 'CASCADE',
-    nullable: false,
   })
   @JoinColumn({ name: 'option_id' })
   option: ProductOption;

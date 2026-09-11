@@ -1,69 +1,60 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
-import { decimalColumn } from 'src/shared/utils/decimal-column.transformer';
 import { Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 import { Product } from './product.entity';
+import { decimalColumn, decimalColumnNullable } from 'src/shared/utils/decimal-column.transformer';
 import { ProductImage } from './product-image.entity';
 import { ProductOptionValue } from './product-option-value.entity';
 
 @Entity('product_variants')
-// Partial unique index: chỉ enforce unique barcode khi barcode IS NOT NULL
-@Index('uq_variant_barcode', ['barcode'], {
-  unique: true,
-  where: '"barcode" IS NOT NULL',
-})
-// Partial index: chỉ index variant đang bị tắt để query nhanh hơn
-@Index('idx_variant_inactive', ['isActive'], { where: '"is_active" = false' })
+// Composite index: Tối ưu cho query lấy variants của 1 product và filter/sort theo giá
+@Index(['productId', 'price'])
 export class ProductVariant extends BaseEntity {
+  // FK index: tăng tốc JOIN và filter WHERE product_id = ?
   @Index()
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', name: 'product_id' })
   productId: string;
 
-  /** SKU là định danh duy nhất của một variant */
-  @Index({ unique: true })
-  @Column({ type: 'varchar', length: 100 })
-  sku: string;
+  @Column({ type: 'varchar', length: 255 })
+  title: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Index()
+  @Column({ type: 'varchar', length: 255, unique: true, nullable: true })
+  sku: string | null;
+
+  @Index()
+  @Column({ type: 'varchar', length: 255, nullable: true })
   barcode: string | null;
 
   @Column(decimalColumn)
   price: number;
 
-  @Column(decimalColumn)
-  compareAtPrice: number;
+  @Column(decimalColumnNullable)
+  compareAtPrice: number | null;
 
   @Column({ type: 'int', default: 0 })
   stockQuantity: number;
 
-  /** Cảnh báo khi số lượng tồn kho thấp hơn ngưỡng này */
   @Column({ type: 'int', default: 0 })
   lowStockThreshold: number;
 
-  @Column({ ...decimalColumn, default: 1 })
-  weight: number;
-
-  @Index({ unique: true })
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  slug: string | null;
-
+  // FK index: tăng tốc JOIN và ON DELETE SET NULL khi xóa image
   @Index()
-  @Column({ type: 'uuid', nullable: true })
+  @Column({ type: 'uuid', name: 'image_id', nullable: true })
   imageId: string | null;
-
-  @ManyToOne(() => ProductImage, { onDelete: 'SET NULL', nullable: true })
-  @JoinColumn({ name: 'image_id' })
-  image: ProductImage | null;
-
-  @Column({ type: 'boolean', default: true })
-  isActive: boolean;
 
   @ManyToOne(() => Product, (product) => product.variants, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
-  @ManyToMany(() => ProductOptionValue, (optionValue) => optionValue.variants)
+  @ManyToOne(() => ProductImage, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'image_id' })
+  image: ProductImage | null;
+
+  @ManyToMany(() => ProductOptionValue, (optionValue) => optionValue.variants, {
+    cascade: ['insert', 'update'],
+  })
   @JoinTable({
-    name: 'variant_option_values',
+    name: 'product_variant_option_values',
     joinColumn: {
       name: 'variant_id',
       referencedColumnName: 'id',
