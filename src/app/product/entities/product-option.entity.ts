@@ -1,12 +1,5 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Product } from './product.entity';
 import { ProductOptionValue } from './product-option-value.entity';
 
@@ -31,6 +24,11 @@ export class ProductOption extends BaseEntity {
   @Index()
   @Column({ type: 'uuid', name: 'product_id' })
   productId: string;
+  @ManyToOne(() => Product, (product) => product.options, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
 
   @Column({ type: 'enum', enum: OptionType, default: OptionType.TEXT })
   type: OptionType;
@@ -40,10 +38,4 @@ export class ProductOption extends BaseEntity {
     orphanedRowAction: 'delete',
   })
   values: ProductOptionValue[];
-
-  @ManyToOne(() => Product, (product) => product.options, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'product_id' })
-  product: Product;
 }

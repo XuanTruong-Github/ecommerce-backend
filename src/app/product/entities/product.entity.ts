@@ -3,6 +3,7 @@ import { Column, DeleteDateColumn, Entity, Index, OneToMany } from 'typeorm';
 import { ProductOption } from './product-option.entity';
 import { ProductVariant } from './product-variant.entity';
 import { ProductImage } from './product-image.entity';
+import { ProductReview } from './product-review.entity';
 
 export enum ProductStatus {
   ACTIVE = 'active',
@@ -21,7 +22,7 @@ export class Product extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
-  @Index({ unique: true })
+  @Index()
   @Column({ type: 'varchar', length: 255, unique: true })
   handle: string;
 
@@ -38,7 +39,7 @@ export class Product extends BaseEntity {
   tags: string[];
 
   @Index()
-  @Column({ type: 'enum', enum: ProductStatus, default: ProductStatus.DRAFT })
+  @Column({ type: 'enum', enum: ProductStatus, default: ProductStatus.ACTIVE })
   status: ProductStatus;
 
   @Column({ type: 'jsonb', default: {} })
@@ -67,6 +68,20 @@ export class Product extends BaseEntity {
     orphanedRowAction: 'delete',
   })
   variants: ProductVariant[];
+
+  @OneToMany(() => ProductReview, (review) => review.product, {
+    cascade: true,
+  })
+  reviews: ProductReview[];
+
+  @Column({ type: 'decimal', precision: 3, scale: 2, default: 0 })
+  averageRating: number;
+
+  @Column({ type: 'int', default: 0 })
+  reviewsCount: number;
+
+  @Column({ type: 'jsonb', default: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } })
+  ratingDistribution: Record<string, number>;
 
   @Index()
   @DeleteDateColumn({

@@ -12,22 +12,19 @@ export class ProductOptionValue extends BaseEntity {
   @Column({ type: 'uuid', name: 'option_id' })
   optionId: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  value: string;
-
-  @Column({ type: 'varchar', length: 255 })
-  label: string;
-
-  // Index: tăng tốc ORDER BY position khi load values theo thứ tự
-  @Index()
-  @Column({ type: 'smallint' })
-  position: number;
-
   @ManyToOne(() => ProductOption, (option) => option.values, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'option_id' })
   option: ProductOption;
+
+  @Column({ type: 'varchar', length: 255 })
+  value: string;
+
+  // Index: tăng tốc ORDER BY position khi load values theo thứ tự
+  @Index()
+  @Column({ type: 'smallint' })
+  position: number;
 
   @ManyToMany(() => ProductVariant, (variant) => variant.optionValues)
   variants: ProductVariant[];

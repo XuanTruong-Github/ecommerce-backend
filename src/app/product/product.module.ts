@@ -7,6 +7,7 @@ import { ProductOption } from './entities/product-option.entity';
 import { ProductOptionValue } from './entities/product-option-value.entity';
 import { ProductVariant } from './entities/product-variant.entity';
 import { ProductImage } from './entities/product-image.entity';
+import { ProductReview, ProductReviewImage } from './entities/product-review.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,8 @@ import { ProductImage } from './entities/product-image.entity';
       ProductOptionValue,
       ProductVariant,
       ProductImage,
+      ProductReview,
+      ProductReviewImage,
     ]),
   ],
   controllers: [ProductController],
