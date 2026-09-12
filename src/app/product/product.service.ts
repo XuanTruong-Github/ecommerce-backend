@@ -1,10 +1,12 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { createHandle, createSKU } from 'src/shared/helpers/product.helper';
 import { includeColumns } from 'src/shared/utils/typeorm-select-columns';
 import { DataSource, FindOptionsWhere, ILike, Raw, Repository } from 'typeorm';
 import { CreateProductDto, GetProductsDto, UpdateProductDto } from './dto/product.dto';
+import { ProductOptionValue } from './entities/product-option-value.entity';
+import { OptionType, ProductOption } from './entities/product-option.entity';
 import { ProductVariant } from './entities/product-variant.entity';
 import { Product } from './entities/product.entity';
 
@@ -66,6 +68,34 @@ export class ProductService {
           imageId: newProduct.images?.[0]?.id || null,
         });
         await manager.save(defaultVariant);
+      } else {
+        // Saving Options
+        const valueMap = new Map<string, ProductOptionValue>();
+        for (let i = 0; i < options.length; i++) {
+          const option = await manager.save(
+            manager.create(ProductOption, {
+              productId: newProduct.id,
+              name: options[i].name,
+              type: options[i]?.type || OptionType.TEXT,
+              position: i,
+            }),
+          );
+          for (
+            let optionValueIndex = 0;
+            optionValueIndex < options[i].values.length;
+            optionValueIndex++
+          ) {
+            const optionValueDto = options[i].values[optionValueIndex];
+            const optionValue = await manager.save(
+              manager.create(ProductOptionValue, {
+                value: optionValueDto.value,
+                optionId: option.id,
+                position: optionValueIndex,
+              }),
+            );
+            valueMap.set(`${option.name}|${optionValueDto.value}`, optionValue);
+          }
+        }
       }
       return manager.findOne(Product, {
         where: { id: newProduct.id },
@@ -139,6 +169,38 @@ export class ProductService {
       })),
       total: count,
     };
+  }
+
+  async findById(id: string) {
+    const product = await this.productRepository.findOne({
+      where: { id },
+      relations: {
+        images: true,
+        options: {
+          values: true,
+        },
+        variants: {
+          image: true,
+          optionValues: true,
+        },
+        reviews: {
+          images: true,
+        },
+      },
+      order: {
+        images: {
+          position: 'ASC',
+        },
+        options: {
+          position: 'ASC',
+          values: { position: 'ASC' },
+        },
+      },
+    });
+    if (!product) throw new NotFoundException('Product not found!');
+    product.defaultVariant = product.variants[0];
+    if (product.hasOnlyDefaultVariant) delete product.variants;
+    return product;
   }
 
   findOne(id: string) {
