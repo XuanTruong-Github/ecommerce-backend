@@ -31,8 +31,6 @@ export function setupApp(app: NestExpressApplication) {
       transformOptions: {
         enableImplicitConversion: true,
       },
-      whitelist: true,
-      forbidNonWhitelisted: true,
     }),
   );
   app.setGlobalPrefix('/api');

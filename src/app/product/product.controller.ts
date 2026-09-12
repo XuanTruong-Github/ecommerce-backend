@@ -8,10 +8,10 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse } from '@nestjs/swagger';
-import { Pagination } from 'src/common/decorators/pagination.decorator';
-import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
+import { CreateProductDto, GetProductsDto, UpdateProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -26,13 +26,13 @@ export class ProductController {
   }
 
   @Get()
-  findAll(@Pagination() pagination) {
-    return this.productService.findAll(pagination);
+  findAll(@Query() query: GetProductsDto) {
+    return this.productService.findAll(query);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+    return this.productService.findOne(id);
   }
 
   @Patch(':id')

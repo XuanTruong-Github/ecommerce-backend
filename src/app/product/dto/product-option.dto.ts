@@ -23,8 +23,6 @@ export class ProductOptionDto {
   @MaxLength(100)
   name: string;
 
-  @IsOptional()
-  @IsInt()
   position?: number;
 
   @IsOptional()

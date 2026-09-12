@@ -69,6 +69,8 @@ export class Product extends BaseEntity {
   })
   variants: ProductVariant[];
 
+  defaultVariant?: ProductVariant;
+
   @OneToMany(() => ProductReview, (review) => review.product, {
     cascade: true,
   })
