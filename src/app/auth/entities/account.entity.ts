@@ -1,6 +1,6 @@
-import { Column, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from 'src/configs/database/base.entity';
 import { User } from 'src/app/user/entities/user.entity';
+import { BaseEntity } from 'src/configs/database/base.entity';
+import { Column, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity('accounts')
 @Index(['issuer', 'accountId'], { unique: true })

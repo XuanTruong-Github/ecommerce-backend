@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule as BetterAuthModule } from '@thallesp/nestjs-better-auth';
-import { DataSource } from 'typeorm';
 import { createBetterAuthInstance } from 'src/app/auth/auth.config';
+import { DataSource } from 'typeorm';
+import { RedisModule } from '../../configs/redis/redis.module';
+import { EmailModule } from '../email/email.module';
+import { EmailService } from '../email/email.service';
+import { User } from '../user/entities/user.entity';
 import { Account } from './entities/account.entity';
 import { Session } from './entities/session.entity';
 import { Verification } from './entities/verification.entity';
-import { User } from '../user/entities/user.entity';
-import { EmailModule } from '../email/email.module';
-import { EmailService } from '../email/email.service';
-import { RedisModule } from '../../configs/redis/redis.module';
 
 @Module({
   imports: [

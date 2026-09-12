@@ -1,12 +1,12 @@
 import { ArgumentsHost, ExceptionFilter, HttpException, Injectable } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { PinoLogger } from 'nestjs-pino';
+import { REQUEST_ID } from 'src/common/middlewares/request-id.middleware';
 import {
   buildApiErrorPayload,
   extractFromHttpExceptionBody,
   payloadFromUnknownException,
 } from 'src/shared/helpers/api-error-response';
-import { REQUEST_ID } from 'src/common/middlewares/request-id.middleware';
 
 @Injectable()
 export class AllExceptionFilter implements ExceptionFilter {

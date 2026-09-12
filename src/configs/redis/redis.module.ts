@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
 import { RedisModule as IoredisModule } from '@nestjs-modules/ioredis';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisService } from './redis.service';
 

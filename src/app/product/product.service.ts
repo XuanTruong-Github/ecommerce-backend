@@ -1,11 +1,10 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { PaginationType } from 'src/common/decorators/pagination.decorator';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
 import { PinoLogger } from 'nestjs-pino';
+import { PaginationType } from 'src/common/decorators/pagination.decorator';
+import { Repository } from 'typeorm';
+import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
+import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductService {
@@ -16,7 +15,26 @@ export class ProductService {
     this.logger.setContext(ProductService.name);
   }
   create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+    try {
+      const haveVariants = createProductDto.options.length > 0;
+      if (!haveVariants) {
+      }
+      const newProduct = {
+        ...createProductDto,
+        images: createProductDto.images.map((item, index) => ({
+          ...item,
+          position: index,
+          isPrimary: index === 0,
+        })),
+      };
+      return newProduct;
+    } catch (error: any) {
+      this.logger.error({
+        msg: 'Failed to create product',
+        error: error?.message,
+      });
+      throw error;
+    }
   }
 
   async findAll(pagination: PaginationType) {

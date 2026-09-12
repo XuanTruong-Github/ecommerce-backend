@@ -1,25 +1,25 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { validateEnv } from './configs/env.validation';
-import { PinoLoggerModule } from './configs/logger.module';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { AppThrottlerModule } from './configs/throttler/throttler.module';
-import { RequestIdMiddleware } from './common/middlewares/request-id.middleware';
-import { AllExceptionFilter } from './common/filters/all-exceptions.filter';
-import { allConfigs } from './configs/configurations';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfigService } from './configs/database/typeorm-config.service';
-import { AuthModule } from './app/auth/auth.module';
-import { UserModule } from './app/user/user.module';
 import { AddressModule } from './app/address/address.module';
+import { AuthModule } from './app/auth/auth.module';
 import { CategoryModule } from './app/category/category.module';
-import { ProductModule } from './app/product/product.module';
+import { CouponModule } from './app/coupon/coupon.module';
 import { EmailModule } from './app/email/email.module';
+import { ProductModule } from './app/product/product.module';
+import { UploadModule } from './app/upload/upload.module';
+import { UserModule } from './app/user/user.module';
+import { AllExceptionFilter } from './common/filters/all-exceptions.filter';
+import { RequestIdMiddleware } from './common/middlewares/request-id.middleware';
+import { allConfigs } from './configs/configurations';
+import { TypeOrmConfigService } from './configs/database/typeorm-config.service';
+import { validateEnv } from './configs/env.validation';
+import { PinoLoggerModule } from './configs/logger.module';
 import { RedisModule } from './configs/redis/redis.module';
 import { RedisService } from './configs/redis/redis.service';
-import { CouponModule } from './app/coupon/coupon.module';
-import { UploadModule } from './app/upload/upload.module';
+import { AppThrottlerModule } from './configs/throttler/throttler.module';
 const envFile =
   process.env.NODE_ENV === 'production'
     ? ['.env.production', '.env']

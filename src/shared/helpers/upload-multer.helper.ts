@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
-import { diskStorage } from 'multer';
 import { existsSync, mkdirSync } from 'fs';
+import { diskStorage } from 'multer';
 import { extname, join } from 'path';
 
 export const UPLOAD_IMAGES_DIR = join(process.cwd(), 'upload', 'images');

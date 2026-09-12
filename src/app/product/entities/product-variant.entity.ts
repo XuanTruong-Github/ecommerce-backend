@@ -1,4 +1,5 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
+import { decimalColumn, decimalColumnNullable } from 'src/shared/utils/decimal-column.transformer';
 import {
   Column,
   Entity,
@@ -9,11 +10,10 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Product } from './product.entity';
-import { decimalColumn, decimalColumnNullable } from 'src/shared/utils/decimal-column.transformer';
 import { ProductImage } from './product-image.entity';
 import { ProductOptionValue } from './product-option-value.entity';
 import { ProductReview } from './product-review.entity';
+import { Product } from './product.entity';
 
 @Entity('product_variants')
 // Composite index: Tối ưu cho query lấy variants của 1 product và filter/sort theo giá

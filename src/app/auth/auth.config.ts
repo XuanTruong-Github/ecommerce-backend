@@ -1,9 +1,9 @@
 import { betterAuth } from 'better-auth';
 import { openAPI } from 'better-auth/plugins';
+import type { Pool } from 'pg';
+import type { EmailService } from 'src/app/email/email.service';
 import type { DataSource } from 'typeorm';
 import { v7 as uuidV7 } from 'uuid';
-import type { EmailService } from 'src/app/email/email.service';
-import type { Pool } from 'pg';
 
 export interface BetterAuthOptionsContext {
   dataSource: DataSource;

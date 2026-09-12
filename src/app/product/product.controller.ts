@@ -5,15 +5,14 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Patch,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiCreatedResponse } from '@nestjs/swagger';
-import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 import { Pagination } from 'src/common/decorators/pagination.decorator';
+import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
+import { ProductService } from './product.service';
 
 @Controller('products')
 export class ProductController {

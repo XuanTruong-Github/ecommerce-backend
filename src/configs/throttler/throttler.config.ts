@@ -1,4 +1,4 @@
-import { registerAs } from "@nestjs/config";
+import { registerAs } from '@nestjs/config';
 
 export const THROTTLER_CONFIG = 'throttler';
 export default registerAs(THROTTLER_CONFIG, () => ({

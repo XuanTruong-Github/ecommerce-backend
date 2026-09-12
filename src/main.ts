@@ -1,8 +1,8 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { Logger } from 'nestjs-pino';
+import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { Logger } from 'nestjs-pino';
+import { AppModule } from './app.module';
 import { setupApp } from './bootstrap/setup-app';
 import { setupSwagger } from './bootstrap/setup-swagger';
 

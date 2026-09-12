@@ -1,7 +1,7 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { Product } from './product.entity';
 import { ProductOptionValue } from './product-option-value.entity';
+import { Product } from './product.entity';
 
 export enum OptionType {
   COLOR = 'color',

@@ -41,7 +41,7 @@ export class Coupon extends BaseEntity {
 
   @Column({ type: 'int', default: 0 })
   usedCount: number;
-  
+
   @Column({ type: 'timestamptz' })
   validFrom: Date;
 

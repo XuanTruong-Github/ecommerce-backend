@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { ProductController } from './product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
-import { ProductOption } from './entities/product-option.entity';
-import { ProductOptionValue } from './entities/product-option-value.entity';
-import { ProductVariant } from './entities/product-variant.entity';
 import { ProductImage } from './entities/product-image.entity';
+import { ProductOptionValue } from './entities/product-option-value.entity';
+import { ProductOption } from './entities/product-option.entity';
 import { ProductReview, ProductReviewImage } from './entities/product-review.entity';
+import { ProductVariant } from './entities/product-variant.entity';
+import { Product } from './entities/product.entity';
+import { ProductController } from './product.controller';
+import { ProductService } from './product.service';
 
 @Module({
   imports: [

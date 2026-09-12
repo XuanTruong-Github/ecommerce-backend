@@ -1,9 +1,9 @@
 import { BaseEntity } from 'src/configs/database/base.entity';
 import { Column, DeleteDateColumn, Entity, Index, OneToMany } from 'typeorm';
-import { ProductOption } from './product-option.entity';
-import { ProductVariant } from './product-variant.entity';
 import { ProductImage } from './product-image.entity';
+import { ProductOption } from './product-option.entity';
 import { ProductReview } from './product-review.entity';
+import { ProductVariant } from './product-variant.entity';
 
 export enum ProductStatus {
   ACTIVE = 'active',

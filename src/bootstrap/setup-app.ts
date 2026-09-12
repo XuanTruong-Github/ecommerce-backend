@@ -1,6 +1,6 @@
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import cookieParser from 'cookie-parser';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { join } from 'path';
 export function setupApp(app: NestExpressApplication) {
   app.use(cookieParser());
