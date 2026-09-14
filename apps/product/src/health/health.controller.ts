@@ -3,7 +3,11 @@ import { Controller, Get } from '@nestjs/common';
 @Controller('health')
 export class HealthController {
   @Get()
-  checkHealth(): string {
-    return 'ok';
+  check() {
+    return {
+      status: 'ok',
+      service: 'product-service',
+      timestamp: new Date().toISOString(),
+    };
   }
 }
