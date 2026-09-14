@@ -16,9 +16,11 @@ export const betterAuthProvider: Provider = {
       baseURL: config.betterAuth.url,
       secret: config.betterAuth.secret,
       trustedOrigins: config.betterAuth.trustedOrigins,
+      basePath: '/api/auth',
       database: mongodbAdapter(db),
       emailAndPassword: {
         enabled: true,
+        requireEmailVerification: false,
       },
       session: {
         cookieCache: {
