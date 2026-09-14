@@ -37,7 +37,40 @@ export class Variant {
 
   @Prop({ type: Number })
   compareAtPrice?: number;
+
+  @Prop({
+    type: {
+      value: Number,
+      unit: String,
+    },
+  })
+  weight?: {
+    value: number;
+    unit: string;
+  };
+
+  @Prop({ type: Boolean, default: true })
+  requiresShipping: boolean;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Media',
+  })
+  mediaId?: Types.ObjectId;
+
+  @Prop({ type: Number, default: 0 })
+  position: number;
+
+  @Prop({
+    type: String,
+    enum: ['active', 'inactive'],
+    default: 'active',
+  })
+  status: string;
 }
 
 export type VariantDocument = HydratedDocument<Variant>;
 export const VariantSchema = SchemaFactory.createForClass(Variant);
+VariantSchema.index({ productId: 1 });
+VariantSchema.index({ sku: 1 });
+VariantSchema.index({ status: 1 });
