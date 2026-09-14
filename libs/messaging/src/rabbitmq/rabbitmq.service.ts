@@ -47,6 +47,41 @@ export class RabbitMQService implements OnModuleInit, OnModuleDestroy {
       persistent: true,
     });
   }
+
+  async createConsumer(
+    queue: string,
+    routingKeys: string[],
+    handler: (message: any) => Promise<void>,
+  ) {
+    const exchange = this.config.rabbitmq.exchange;
+    const channel = this.connection.createChannel({
+      json: true,
+      setup: async (channel) => {
+        await channel.assertExchange(exchange, 'topic', { durable: true });
+        await channel.assertQueue(queue, { durable: true });
+        for (const routingKey of routingKeys) {
+          await channel.bindQueue(queue, exchange, routingKey);
+        }
+        await channel.consume(queue, async (msg) => {
+          if (!msg) return;
+          try {
+            const content = JSON.parse(msg.content.toString());
+            await handler(content);
+            channel.ack(msg);
+          } catch (error) {
+            this.logger.error(
+              `Error consuming message from queue ${queue}`,
+              error,
+            );
+
+            channel.nack(msg, false, false);
+          }
+        });
+      },
+    });
+    await channel.waitForConnect();
+    return channel;
+  }
   async onModuleDestroy() {
     await this.connection?.close();
   }

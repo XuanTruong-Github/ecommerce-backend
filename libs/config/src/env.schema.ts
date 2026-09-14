@@ -67,6 +67,19 @@ export const envSchema = z.object({
     .default('info'),
 
   LOG_PRETTY_PRINT: booleanFromString.default(false),
+  SEARCH_SERVICE_HOST: z.string().default('0.0.0.0'),
+  SEARCH_SERVICE_PORT: z.coerce.number().default(3002),
+  SEARCH_SERVICE_URL: z.string().default('http://localhost:3002'),
+  INTERNAL_API_TOKEN: z.string().default('ecommerce-api-token'),
+  ELASTICSEARCH_NODE: z.string().default('http://localhost:9200'),
+  ELASTICSEARCH_USERNAME: z.string().optional(),
+  ELASTICSEARCH_PASSWORD: z.string().optional(),
+  ELASTICSEARCH_INDEX_PREFIX: z.string().default('ecommerce_local'),
+  ELASTICSEARCH_REQUEST_TIMEOUT: z.coerce.number().default(30000),
+
+  STORAGE_PROVIDER: z.enum(['local', 's3', 'cloudinary']).default('local'),
+  LOCAL_STORAGE_PATH: z.string().default('./storage/uploads'),
+  PUBLIC_MEDIA_URL: z.string().default('http://localhost:3000/media'),
 });
 
 export type Env = z.infer<typeof envSchema>;

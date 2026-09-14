@@ -117,4 +117,46 @@ export class AppConfigService {
   get logPrettyPrint() {
     return this.config.get('LOG_PRETTY_PRINT', { infer: true });
   }
+
+  get productService() {
+    return {
+      host: this.config.get('PRODUCT_SERVICE_HOST', { infer: true }),
+      port: this.config.get('PRODUCT_SERVICE_PORT', { infer: true }),
+      url: this.config.get('PRODUCT_SERVICE_URL', { infer: true }),
+    };
+  }
+
+  get searchService() {
+    return {
+      host: this.config.get('SEARCH_SERVICE_HOST', { infer: true }),
+      port: this.config.get('SEARCH_SERVICE_PORT', { infer: true }),
+      url: this.config.get('SEARCH_SERVICE_URL', { infer: true }),
+    };
+  }
+
+  get internalApiToken() {
+    return this.config.get('INTERNAL_API_TOKEN', { infer: true });
+  }
+
+  get elasticsearch() {
+    return {
+      node: this.config.get('ELASTICSEARCH_NODE', { infer: true }),
+      username: this.config.get('ELASTICSEARCH_USERNAME', { infer: true }),
+      password: this.config.get('ELASTICSEARCH_PASSWORD', { infer: true }),
+      indexPrefix: this.config.get('ELASTICSEARCH_INDEX_PREFIX', {
+        infer: true,
+      }),
+      requestTimeout: this.config.get('ELASTICSEARCH_REQUEST_TIMEOUT', {
+        infer: true,
+      }),
+    };
+  }
+
+  get media() {
+    return {
+      provider: this.config.get('STORAGE_PROVIDER', { infer: true }),
+      localStoragePath: this.config.get('LOCAL_STORAGE_PATH', { infer: true }),
+      publicUrl: this.config.get('PUBLIC_MEDIA_URL', { infer: true }),
+    };
+  }
 }

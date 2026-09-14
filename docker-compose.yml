@@ -6,8 +6,8 @@ services:
     container_name: ecommerce-microservice-mongodb
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: truonglx
-      MONGO_INITDB_ROOT_PASSWORD: truonglx0603
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
     ports:
       - "27017:27017"
     volumes:
@@ -38,8 +38,8 @@ services:
     container_name: ecommerce-microservice-rabbitmq
     restart: unless-stopped
     environment:
-      RABBITMQ_DEFAULT_USER: truonglx
-      RABBITMQ_DEFAULT_PASS: truonglx0603
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -53,12 +53,10 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
     container_name: ecommerce-microservice-elasticsearch
     restart: unless-stopped
-    profiles:
-      - search
     environment:
       discovery.type: single-node
       xpack.security.enabled: "true"
-      ELASTIC_PASSWORD: truonglx0603
+      ELASTIC_PASSWORD: ${ELASTICSEARCH_PASSWORD}
     ports:
       - "9200:9200"
     volumes:

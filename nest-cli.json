@@ -64,6 +64,15 @@
         "tsConfigPath": "libs/config/tsconfig.lib.json"
       }
     },
+    "contracts": {
+      "type": "library",
+      "root": "libs/contracts",
+      "entryFile": "index",
+      "sourceRoot": "libs/contracts/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/contracts/tsconfig.lib.json"
+      }
+    },
     "database": {
       "type": "library",
       "root": "libs/database",
@@ -71,6 +80,15 @@
       "sourceRoot": "libs/database/src",
       "compilerOptions": {
         "tsConfigPath": "libs/database/tsconfig.lib.json"
+      }
+    },
+    "elasticsearch": {
+      "type": "library",
+      "root": "libs/elasticsearch",
+      "entryFile": "index",
+      "sourceRoot": "libs/elasticsearch/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/elasticsearch/tsconfig.lib.json"
       }
     },
     "email": {
