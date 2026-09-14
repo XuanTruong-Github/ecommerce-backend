@@ -1,13 +1,13 @@
 version: "3.9"
-
+name: ecommerce-microservice
 services:
   mongodb:
     image: mongo:7
-    container_name: ecommerce-mongodb
+    container_name: ecommerce-microservice-mongodb
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: truonglx
+      MONGO_INITDB_ROOT_PASSWORD: truonglx0603
     ports:
       - "27017:27017"
     volumes:
@@ -20,7 +20,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: ecommerce-redis
+    container_name: ecommerce-microservice-redis
     restart: unless-stopped
     command: redis-server --appendonly yes
     ports:
@@ -35,11 +35,11 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
-    container_name: ecommerce-rabbitmq
+    container_name: ecommerce-microservice-rabbitmq
     restart: unless-stopped
     environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_DEFAULT_USER: truonglx
+      RABBITMQ_DEFAULT_PASS: truonglx0603
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -51,14 +51,14 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
-    container_name: ecommerce-elasticsearch
+    container_name: ecommerce-microservice-elasticsearch
     restart: unless-stopped
     profiles:
       - search
     environment:
       discovery.type: single-node
       xpack.security.enabled: "true"
-      ELASTIC_PASSWORD: changeme
+      ELASTIC_PASSWORD: truonglx0603
     ports:
       - "9200:9200"
     volumes:
