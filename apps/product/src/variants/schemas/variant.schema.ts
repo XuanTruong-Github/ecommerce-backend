@@ -67,6 +67,9 @@ export class Variant {
     default: 'active',
   })
   status: string;
+
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type VariantDocument = HydratedDocument<Variant>;

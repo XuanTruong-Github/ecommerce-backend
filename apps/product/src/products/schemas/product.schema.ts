@@ -85,6 +85,9 @@ export class Product {
 
   @Prop({ type: Date })
   publishedAt?: Date;
+
+  createdAt: Date;
+  updatedAt: Date;
 }
 export type ProductDocument = HydratedDocument<Product>;
 export const ProductSchema = SchemaFactory.createForClass(Product);

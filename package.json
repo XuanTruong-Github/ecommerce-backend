@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./apps/ecommerce-backend/test/jest-e2e.json",
     "setup-docker": "docker compose up -d mongodb redis rabbitmq elasticsearch",
     "start:gateway": "nest start api-gateway --watch",
-    "start:gateway:debug": "nest start api-gateway --debug --watch"
+    "start:gateway:debug": "nest start api-gateway --debug --watch",
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.7.4",

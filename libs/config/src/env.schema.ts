@@ -33,8 +33,8 @@ export const envSchema = z.object({
 
   MONGODB_URI: z.string().min(1, 'MONGODB_URI is required'),
   MONGODB_DB: z.string().default('ecommerce'),
-  MONGODB_MIN_POOL_MIN_SIZE: z.coerce.number().default(5),
-  MONGODB_MAX_POOL_MAX_SIZE: z.coerce.number().default(50),
+  MONGODB_MIN_POOL_SIZE: z.coerce.number().default(5),
+  MONGODB_MAX_POOL_SIZE: z.coerce.number().default(50),
 
   REDIS_HOST: z.string().default('localhost'),
   REDIS_PORT: z.coerce.number().default(6379),

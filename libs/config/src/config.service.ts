@@ -58,10 +58,10 @@ export class AppConfigService {
     return {
       uri: this.config.get('MONGODB_URI', { infer: true }),
       db: this.config.get('MONGODB_DB', { infer: true }),
-      minPoolSize: this.config.get('MONGODB_MIN_POOL_MIN_SIZE', {
+      minPoolSize: this.config.get('MONGODB_MIN_POOL_SIZE', {
         infer: true,
       }),
-      maxPoolSize: this.config.get('MONGODB_MAX_POOL_MAX_SIZE', {
+      maxPoolSize: this.config.get('MONGODB_MAX_POOL_SIZE', {
         infer: true,
       }),
     };
