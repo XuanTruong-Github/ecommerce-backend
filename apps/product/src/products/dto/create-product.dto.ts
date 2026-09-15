@@ -30,16 +30,16 @@ export class CreateProductDto {
   @IsEnum(ProductStatus)
   status?: ProductStatus;
 
-  tags?: string[];
+  tags?: string[] = [];
 
   @IsOptional()
   @IsArray()
-  options?: Array<{ name: string; position: number; values: string[] }>;
+  options?: Array<{ name: string; position: number; values: string[] }> = [];
 
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  collections?: string[];
+  collections?: string[] = [];
 
   @IsOptional()
   @IsObject()

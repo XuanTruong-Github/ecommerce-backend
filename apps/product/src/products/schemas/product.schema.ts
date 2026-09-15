@@ -83,6 +83,9 @@ export class Product {
   })
   collections: Types.ObjectId[];
 
+  @Prop({ type: Boolean, default: false })
+  availableForSale: boolean;
+
   @Prop({ type: Date })
   publishedAt?: Date;
 
